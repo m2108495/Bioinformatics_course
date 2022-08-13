@@ -33,72 +33,34 @@ $ wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
 $ chmod +x ./Anaconda3-2020.02-Linux-x86_64.sh
 $ bash ./Anaconda3-2020.02-Linux-x86_64.sh
 $ source ~/.bashrc
-
 # Install Bioconda and channels from highest to lowest priority
 $ conda config --add channels defaults
 $ conda config --add channels bioconda
 $ conda config --add channels conda-forge
 # Install the required packages and dependencies for NGS pipeline
 $ conda install samtools
-*Samtool package details
-package                    |            build
-    ---------------------------|-----------------
-    conda-4.13.0               |   py37h89c1867_1         989 KB  conda-forge
-    libgcc-7.2.0               |       h69d50b8_2         304 KB  conda-forge
-    python_abi-3.7             |          2_cp37m           4 KB  conda-forge
-    samtools-1.7               |                1         1.0 MB  bioconda
-    ------------------------------------------------------------
-                                           Total:         2.3 MB
-  libgcc             conda-forge/linux-64::libgcc-7.2.0-h69d50b8_2
-  python_abi         conda-forge/linux-64::python_abi-3.7-2_cp37m
-  samtools           bioconda/linux-64::samtools-1.7-1
- $ conda install bwa
- *BWA package details
-  package                    |            build
-    ---------------------------|-----------------
-    bwa-0.7.17                 |       hed695b0_7         523 KB  bioconda
-    perl-5.26.2                |    h36c2ea0_1008        15.4 MB  conda-forge
-    ------------------------------------------------------------
-                                           Total:        15.9 MB
-  bwa                bioconda/linux-64::bwa-0.7.17-hed695b0_7
-  perl               conda-forge/linux-64::perl-5.26.2-h36c2ea0_1008
- $ conda install freebayes
- * Frebyes package details
-package                    |            build
-    ---------------------------|-----------------
-    openjdk-8.0.332            |       h166bdaf_0        97.8 MB  conda-forge
-    picard-2.18.29             |                0        13.6 MB  bioconda
-    ------------------------------------------------------------
-                                           Total:       111.4 MB
-  openjdk            conda-forge/linux-64::openjdk-8.0.332-h166bdaf_0
-  picard             bioconda/noarch::picard-2.18.29-0
-  $ conda install picard
-  *Picard package details
-  package                    |            build
-    ---------------------------|-----------------
-    openjdk-8.0.332            |       h166bdaf_0        97.8 MB  conda-forge
-    picard-2.18.29             |                0        13.6 MB  bioconda
-    ------------------------------------------------------------
-                                           Total:       111.4 MB
-  openjdk            conda-forge/linux-64::openjdk-8.0.332-h166bdaf_0
-  picard             bioconda/noarch::picard-2.18.29-0
-  $ conda install bedtools   
- *Bedtools package details
-  package                    |            build
-    ---------------------------|-----------------
-    bedtools-2.26.0            |                0         739 KB  bioconda
-    ------------------------------------------------------------
-                                           Total:         739 KB
-  bedtools           bioconda/linux-64::bedtools-2.26.0-0
-  $ conda install trimmomatic
-  *Trimmomatic package details
-  package                    |            build
-    ---------------------------|-----------------
-    trimmomatic-0.39           |       hdfd78af_2         144 KB  bioconda
-    ------------------------------------------------------------
-                                           Total:         144 KB
+$ conda install bwa
+$ conda install freebayes
+$ conda install picard
+$ conda install bedtools
+$ conda install trimmomatic
+$ conda install fastqc
+$ conda install vcflib
+# change the directory  to th euntrimmed_fastq file
+# check the quality of the reads pre-alignment by running FASTQC startring with the two sequences to be aligned. 
+# upload the two files as a wildcard
+$ fastqc *.fastq.qz
+![image](https://user-images.githubusercontent.com/111018047/184508781-15bccafa-4810-4008-b675-ed495fa552bd.png)
+***error failed to process ngs..ID line did not start with @**REVISIT THIS STEP
+$ cd ~/ngs_course/dnaseqassignment/data/untrimmed_fastq
+# Run FASTQC as four threads (the capacity of the VM) to spead up the process 
+$ fastqc -t 4 *.fastq.qz
+*888error: no such file* REVISIT***
+# create a folder for the reads and move the results above there.
+$ mkdir ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
+$ mv *fastq* ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads/
+* ERROR
+Then the reference genome.
 
-The following NEW packages will be INSTALLED:
 
-  trimmomatic        bioconda/noarch::trimmomatic-0.39-hd
   
