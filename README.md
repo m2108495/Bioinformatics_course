@@ -25,3 +25,46 @@ $ ls -l
 $ mv NGS0001.R1.fastq.qz ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.qz
 $ mv NGS0001.R2.fastq.qz ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R2.fastq.qz
 $ mv annotation.bed ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/annotation.bed
+# move to the danaseqassignment directory and check it tis the right location
+$ cd ./../..
+$ pwd
+# Download Anaconda
+$ wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+$ chmod +x ./Anaconda3-2020.02-Linux-x86_64.sh
+$ bash ./Anaconda3-2020.02-Linux-x86_64.sh
+$ source ~/.bashrc
+# Install Bioconda and channels from highest to lowest priority
+$ conda config --add channels defaults
+$ conda config --add channels bioconda
+$ conda config --add channels conda-forge
+# Install the required packages and dependencies for NGS pipeline
+$ conda install samtools
+*Samtool version 
+package                    |            build
+    ---------------------------|-----------------
+    conda-4.13.0               |   py37h89c1867_1         989 KB  conda-forge
+    libgcc-7.2.0               |       h69d50b8_2         304 KB  conda-forge
+    python_abi-3.7             |          2_cp37m           4 KB  conda-forge
+    samtools-1.7               |                1         1.0 MB  bioconda
+    ------------------------------------------------------------
+                                           Total:         2.3 MB
+
+The following NEW packages will be INSTALLED:
+
+  libgcc             conda-forge/linux-64::libgcc-7.2.0-h69d50b8_2
+  python_abi         conda-forge/linux-64::python_abi-3.7-2_cp37m
+  samtools           bioconda/linux-64::samtools-1.7-1
+ $ conda install bwa
+ *BWA info
+  package                    |            build
+    ---------------------------|-----------------
+    bwa-0.7.17                 |       hed695b0_7         523 KB  bioconda
+    perl-5.26.2                |    h36c2ea0_1008        15.4 MB  conda-forge
+    ------------------------------------------------------------
+                                           Total:        15.9 MB
+
+The following NEW packages will be INSTALLED:
+
+  bwa                bioconda/linux-64::bwa-0.7.17-hed695b0_7
+  perl               conda-forge/linux-64::perl-5.26.2-h36c2ea0_1008
+ $ conda install freebayes
