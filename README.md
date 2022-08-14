@@ -46,21 +46,22 @@ $ conda install bedtools
 $ conda install trimmomatic
 $ conda install fastqc
 $ conda install vcflib
-# change the directory  to th euntrimmed_fastq file
-# check the quality of the reads pre-alignment by running FASTQC startring with the two sequences to be aligned. 
-# upload the two files as a wildcard
-$ fastqc *.fastq.qz
-![image](https://user-images.githubusercontent.com/111018047/184508781-15bccafa-4810-4008-b675-ed495fa552bd.png)
-***error failed to process ngs..ID line did not start with @**REVISIT THIS STEP
+# change the directory  to the untrimmed_fastq file
 $ cd ~/ngs_course/dnaseqassignment/data/untrimmed_fastq
-# Run FASTQC as four threads (the capacity of the VM) to spead up the process 
+# Rename both reads from *fastq.QZ suffix into *fastq.GZ to be recognised by FASTQC 
+$ mv NGS0001.R1.fastq.qz NGS0001.R1.fastq.gz
+$ mv NGS0001.R2.fastq.qz NGS0001.R2.fastq.gz
+# check that the two files are renamed in data/untrimmed_fastq
+$ ls
+# check the quality of the reads pre-alignment by running FASTQC startring with the two sequences to be aligned. 
+# Upload the two files as a wildcard. Run FASTQC as four threads (the capacity of the VM) to spead up the process 
 $ fastqc -t 4 *.fastq.qz
-*888error: no such file* REVISIT***
 # create a folder for the reads and move the results above there.
+$ cd ~/ngs_course/dnaseqassignment/results
 $ mkdir ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
-$ mv *fastq* ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads/
-* ERROR
-Then the reference genome.
+$ mv *fastqc.zip ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
+$ mv *fastqc.html ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
+
 
 
   
