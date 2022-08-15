@@ -60,7 +60,20 @@ $ fastqc -t 4 *.fastq.qz
 $ cd ~/ngs_course/dnaseqassignment/results
 $ mkdir ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
 $ mv *fastqc.zip ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
-$ mv *fastqc.html ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads
+$ mv *fastqc.html ~/ngs_course/dnaseqassignment/results/fastqc_untrimmed_reads 
+# View and save the zip report output from FASTQC
+# Install unzip program
+$ sudo apt install unzip
+# Unpack the zip utputs from FASTQC using wilcard *fastqc
+$ for zip in *.zip
+> do
+> unzip $zip
+> done
+$ ls -1h NGS0001.R1_fastqc
+# Display the first 10 lines of FATSQC text files showing the statistics of the quality control
+$ head NGS0001.R1_fastqc
+# Save all the summry.txt into one report : Concatenat the two summary.txt outputs into one one file <fastqc_summaries.txt> in the subdirectory logs
+$ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/fastqc_summaries.txt
 
 
 
