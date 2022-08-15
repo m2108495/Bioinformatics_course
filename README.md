@@ -84,6 +84,19 @@ $ cd ~/ngs_course/dnaseqassignment/data/trimmed_fastq
 # Trimm paired ends on  4 parallel thread using: 1- phred scrore of 33 as the cut off for quality, 2- ILLUMINACLIP: to cut adapter and other illumina-specific sequences. 3-TRAILING : Cutting bases of the end of the read with quality threshold below  25 and 4-  MINLEN dropping reads below the length  of 50 bp
 $ trimmomatic PE -threads 4 -phred33 /home/ubuntu/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.gz /home/ubuntu/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R2.fastq.gz\
 >   -baseout ~/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R ILLUMINACLIP:/home/ubuntu/anaconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/NexteraPE-PE.fa:2:30:10 TRAILING:25 MINLEN:50
+# Asses the quality of the paired trimmed files : repeat the steps for untrimmed reads as above 
+$ fastqc -t 4 *P
+$ cd ~/ngs_course/dnaseqassignment/results
+$ mkdir ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
+$ cd ~/ngs_course/dnaseqassignment/data/trimmed_fastq
+$ mv *fastqc.zip ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
+$ mv *fastqc.html ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
+$ cd ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
+# make a subdirectory for summary.txt for trimmed reads
+$ cd /home/ubuntu/ngs_course/dnaseqassignment/logs
+$ mkdir trimmmed
+$ ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
+$ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/trimmmed/fastqc_summaries.txt
 
 
 
