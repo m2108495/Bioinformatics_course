@@ -1,4 +1,5 @@
 # Bioinformatics_course
+Organising the directories for the NS pipeine
 # check the home directory 
 $ pwd
 create directory and subdirectories for inputs and outputs from the NGS pipeline
@@ -25,7 +26,7 @@ $ ls -l
 $ mv NGS0001.R1.fastq.qz ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.qz
 $ mv NGS0001.R2.fastq.qz ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R2.fastq.qz
 $ mv annotation.bed ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/annotation.bed
-# move to the danaseqassignment directory and check it tis the right location
+# move to the danaseqassignment directory and check that  it is in the right location
 $ cd ./../..
 $ pwd
 # Download Anaconda
@@ -72,8 +73,16 @@ $ for zip in *.zip
 $ ls -1h NGS0001.R1_fastqc
 # Display the first 10 lines of FATSQC text files showing the statistics of the quality control
 $ head NGS0001.R1_fastqc
-# Save all the summry.txt into one report : Concatenat the two summary.txt outputs into one one file <fastqc_summaries.txt> in the subdirectory logs
+# Save both  summary.txt files for quality  into one report : Concatenate the two summary.txt outputs into one one file <fastqc_summaries.txt> in the subdirectory logs
 $ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/fastqc_summaries.txt
+#  check that the new file contains the summary for both reads
+$ head -30 fastqc_summaries.txt
+*Trimming 
+Move to trimmed fastq file 
+$ cd ~/ngs_course/dnaseqassignment/data/trimmed_fastq
+$ trimmomatic PE -threads 4 -phred33 /~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.gz /~/ngs_course/dnaseqassignment/data/NGS0001.R2.fastq.gz\
+> -baseout /~/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R ILLUMINACLIP:/home/ubuntu/anaconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/NexteraPE-PE.fa:2:30:10 TRAILING:25 MINLEN:50
+
 
 
 
