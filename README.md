@@ -1,5 +1,5 @@
 # Bioinformatics_course
-Organising the directories for the NGS pipeine
+Organising the directories for the NGS pipeline
 # check the home directory 
 $ pwd
 create directory and subdirectories for inputs and outputs from the NGS pipeline
@@ -110,6 +110,9 @@ Aligning paired trimmed fastq files using read group information. After creating
 $ mkdir ~/ngs_course/dnaseqassignment/data/aligned_data
 $ bwa index ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
 $ ls ~/ngs_course/dnaseqassignment/data/reference
+$ ~/ngs_course/dnaseqassignment/data/trimmed_fastq
+$ head NGS0001_trimmed_R_2P
+@11V6WR1:111:D1375ACXX:1:1101
 
 
   
