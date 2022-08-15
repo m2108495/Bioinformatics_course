@@ -1,5 +1,5 @@
 # Bioinformatics_course
-Organising the directories for the NS pipeine
+Organising the directories for the NGS pipeine
 # check the home directory 
 $ pwd
 create directory and subdirectories for inputs and outputs from the NGS pipeline
@@ -78,8 +78,10 @@ $ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/fastqc_summaries.txt
 #  check that the new file contains the summary for both reads
 $ head -30 fastqc_summaries.txt
 *Trimming 
-Move to trimmed fastq file 
+# Move to trimmed fastq file 
 $ cd ~/ngs_course/dnaseqassignment/data/trimmed_fastq
+# check the version and path for trimmomatic by using ls and cd commands
+# Trimm paired ends on  4 parallel thread using: 1- phred scrore of 33 as the cut off for quality, 2- ILLUMINACLIP: to cut adapter and other illumina-specific sequences. 3-TRAILING : Cutting bases of the end of the read with quality threshold below  25 and 4-  MINLEN dropping reads below the length  of 50 bp
 $ trimmomatic PE -threads 4 -phred33 /~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.gz /~/ngs_course/dnaseqassignment/data/NGS0001.R2.fastq.gz\
 > -baseout /~/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R ILLUMINACLIP:/home/ubuntu/anaconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/NexteraPE-PE.fa:2:30:10 TRAILING:25 MINLEN:50
 
