@@ -97,6 +97,18 @@ $ cd /home/ubuntu/ngs_course/dnaseqassignment/logs
 $ mkdir trimmmed
 $ ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
 $ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/trimmmed/fastqc_summaries.txt
+# Create files for the reference and the BWA-generated index files
+$ mkdir -p ~/ngs_course/dnaseqassignment/data/reference
+$ mv ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/annotation.bed ~/ngs_course/ dnaseqassignment /data/reference
+# Create files for the reference and the BWA-generated index files
+$ mkdir -p ~/ngs_course/dnaseqassignment/data/reference
+$ mv ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/annotation.bed ~/ngs_course/ dnaseqassignment /data/reference/
+$ bwa index ~/ngs_course/dnaseqassignment /data/reference/annotation. Bed
+# Display the generated files
+$ ls ~/ngs_course/ dnaseqassignment /data/reference
+Aligning paired trimmed fastq files using read group information. After creating a directory for the aligned files.
+$ mkdir ~/ngs_course/dnaseqassignment/data/aligned_data
+
 
 
 
