@@ -108,8 +108,8 @@ $ bwa index ~/ngs_course/dnaseqassignment /data/reference/annotation. Bed
 $ ls ~/ngs_course/ dnaseqassignment /data/reference
 Aligning paired trimmed fastq files using read group information. After creating a directory for the aligned files.
 $ mkdir ~/ngs_course/dnaseqassignment/data/aligned_data
-
-
+$ bwa index ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
+$ ls ~/ngs_course/dnaseqassignment/data/reference
 
 
   
