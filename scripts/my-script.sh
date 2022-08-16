@@ -85,7 +85,15 @@ $ picard MarkDuplicates I= NGS0001_sorted.bam O= NGS0001_sorted_marked.bam M=mar
 $ samtools index NGS0001_sorted_marked.bam
 $ samtools view -F 1796  -q 20 -o NGS0001_sorted_filtered.bam NGS0001_sorted_marked.bam
 $ samtools index NGS0001_sorted_filtered.bam
-
+$ zcat ~/ngs_course/dnaseqassignment/data/reference/annotation.bed > ~/ngs_course/dnaseqassignment/data/reference/annotation_2.bed
+$ samtools faidx ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
+$ freebayes -bam ~/ngs_course/ dnaseqassignment /data/aligned_data/ NGS0001_sorted _filtered.bam --fasta-reference ~/ngs_course/ dnaseqassignment /data/reference/annotation.bed --vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf
+$ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf
+$ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz
+$ vcffilter -f "QUAL > 1 & QUAL / AO > 10 & SAF > 0 & SAR > 0 & RPR > 1 & RPL > 1" \ ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz > ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+$ bedtools intersect -header -wa -a ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf -b ../chr22.genes.annotation.bed \~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+$ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+$ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf.gz
 $ cd annovar
 $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar knownGene humandb/
 $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar refGene humandb/
@@ -93,6 +101,11 @@ $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar ensGene humand
 $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar clinvar_20180603 humandb/
 $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar exac03 humandb/
 $ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar dbnsfp31a_interpro humandb/
+$ ./convert2annovar.pl -format vcf4 ~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.vcf.gz >~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.avinput
+$./table_annovar.pl~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.avinput humandb/ -buildver annotation.bed  \ 
+   -out ~/ngs_course/dnaseqassignment/results/ NGS0001_filtered -remove   \ 
+      -protocol refGene,ensGene,clinvar_20180603,exac03,dbnsfp31a_interpro -operation g,g,f,f,f -otherinfo -nastring . -csvout
+
 
 
 
