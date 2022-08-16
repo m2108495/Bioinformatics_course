@@ -259,7 +259,7 @@ $ picard MarkDuplicates I= NGS0001_sorted.bam O= NGS0001_sorted_marked.bam M=mar
 
 $ samtools index NGS0001_sorted_marked.bam
 
-# 9. Quality Filter the duplicate marked BAM file (2pts) 
+# 9. Quality Filter the duplicate marked BAM file
 
 Samtools can filter out the poor quality duplicate marked files based on:
 i.	Mapping quality score : se t as minimum MAPQ: 20 
