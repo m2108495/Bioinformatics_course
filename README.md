@@ -106,13 +106,15 @@ $ mv ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/annotation.bed ~/ngs_cou
 $ bwa index ~/ngs_course/dnaseqassignment /data/reference/annotation. Bed
 # Display the generated files
 $ ls ~/ngs_course/ dnaseqassignment /data/reference
-Aligning paired trimmed fastq files using read group information. After creating a directory for the aligned files.
+ # Making the reference index after creating a directory for the aligned files
 $ mkdir ~/ngs_course/dnaseqassignment/data/aligned_data
 $ bwa index ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
 $ ls ~/ngs_course/dnaseqassignment/data/reference
+# Aligning paired trimmed fastq files using read group information.
 $ ~/ngs_course/dnaseqassignment/data/trimmed_fastq
 $ head NGS0001_trimmed_R_2P
 @11V6WR1:111:D1375ACXX:1:1101
-
+# Use BWA-MEM to align paired-end sequences. Briefly, the algorithm works by seeding alignments with
+maximal exact matches (MEMs) and then extending seeds with the affine-gap Smith-Waterman algorithm (SW)
 
   
