@@ -231,26 +231,28 @@ $ bwa mem -t4 -V1 -R'@RG\tID:HWI-D0011.50.H7AP8ADXX.1.WES01\tSM:WES01\tPL:ILLUMI
 /home/ubuntu/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R_1P  
 /home/ubuntu/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R_2P > /home/ubuntu/ngs_course/dnaseqassignment/data/aligned_data/NGS0001.sam
 
- # change directory to the aligned data 
+ # 7.6. change directory to the aligned data 
  
 $ cd ~/ngs_course/dnaseqassignment/data/aligned_data
 
-# convert   the sam file into bam format, sort it and generate an index using samtools
+# 7.7. convert   the sam file into bam format, sort it and generate an index using samtools
 
 $ samtools view -h -b NGS0001.sam > NGS0001.bam
 
 $ samtools sort NGS0001.bam > NGS0001_sorted.bam
 
 $ samtools index NGS0001_sorted.bam
+ 
 $ ls
-# Perform duplicate marking 
+ 
+# 8. Perform duplicate marking 
 
 Picard examines the aligned reads in sam and bam formats and mark duplicates reads. The output is two files: the duplicate reads flagged in a file and a text file with summary of numbers of duplicates 
 $ picard MarkDuplicates I= NGS0001_sorted.bam O= NGS0001_sorted_marked.bam M=marked_dup_metrics.txt
 
 $ samtools index NGS0001_sorted_marked.bam
 
-# Quality Filter the duplicate marked BAM file (2pts) 
+# 9. Quality Filter the duplicate marked BAM file (2pts) 
 
 Samtools can filter out the poor quality duplicate marked files based on:
 i.	Mapping quality score : se t as minimum MAPQ: 20 
@@ -260,3 +262,32 @@ $ samtools view -F 1796  -q 20 -o NGS0001_sorted_filtered.bam NGS0001_sorted_mar
 
 $ samtools index NGS0001_sorted_filtered.bam
 
+# 10. Variant calling and filtering
+# 10.1 preparing inputs for variant filtering
+Freebayes recognize the variation in the BAM file from  reference sequence. First will convert and prepare the files to be used as inputs. The FASTA reference sequence is converted to text format and then indexed by samtools faidx. The other input is BAM-format alignment file sorted by reference position. Then variants are called by Freebayes. VCF output is   compressed and indexed by  tabix:
+ 
+$ zcat ~/ngs_course/dnaseqassignment/data/reference/annotation.bed > ~/ngs_course/dnaseqassignment/data/reference/annotation_2.bed
+
+$ samtools faidx ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
+
+$ freebayes -bam ~/ngs_course/ dnaseqassignment /data/aligned_data/ NGS0001_sorted _filtered.bam --fasta-reference ~/ngs_course/ dnaseqassignment /data/reference/annotation.bed --vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf
+
+$ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf
+
+$ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz
+ 
+# 10.3. Variant filtering 
+ 
+# The command is used as $ vcffilter -f "QUAL > 1 & QUAL / AO > 10 & SAF > 0 & SAR > 0 & RPR > 1 & RPL > 1" \ ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz > ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+# filtering criteria 
+ # 1-  QUAL=probability that there is a polymorphism at the loci described by the record: 1 - P(locus is homozygous given the data)
+# 2- AO=Alternate allele observations, with partial observations recorded fractionally
+ # 3- SAF=Number of alternate observations on the forward strand SAR=Number of alternate observations on the reverse strand 
+ # 4- RPL=Reads Placed Left: number of reads supporting the alternate balanced to the left (5’) of -the alternate allele RPR=Reads Placed Right: number of reads supporting the alternate balanced to the right (3’) of the alternate allele
+ 
+$ bedtools intersect -header -wa -a ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf -b ../chr22.genes.annotation.bed \~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+
+$ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
+
+$ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf.gz
+ 
