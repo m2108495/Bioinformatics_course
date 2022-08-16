@@ -276,13 +276,13 @@ $ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf
 
 $ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz
  
-# 10.3. Variant filtering 
+# 10.3. Variant calling 
  
 # The command is used as $ vcffilter -f "QUAL > 1 & QUAL / AO > 10 & SAF > 0 & SAR > 0 & RPR > 1 & RPL > 1" \ ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz > ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
 # filtering criteria 
  # 1-  QUAL=probability that there is a polymorphism at the loci described by the record: 1 - P(locus is homozygous given the data)
 # 2- AO=Alternate allele observations, with partial observations recorded fractionally
- # 3- SAF=Number of alternate observations on the forward strand SAR=Number of alternate observations on the reverse strand 
+# 3- SAF=Number of alternate observations on the forward strand SAR=Number of alternate observations on the reverse strand 
  # 4- RPL=Reads Placed Left: number of reads supporting the alternate balanced to the left (5’) of -the alternate allele RPR=Reads Placed Right: number of reads supporting the alternate balanced to the right (3’) of the alternate allele
  
 $ bedtools intersect -header -wa -a ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf -b ../chr22.genes.annotation.bed \~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
@@ -291,3 +291,32 @@ $ bgzip ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
 
 $ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf.gz
  
+# 11. Variants annotation and prioritisation
+ 
+# 11.1.Downloading Annovar 
+ 
+$ cd annovar
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar knownGene humandb/
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar refGene humandb/
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar ensGene humandb/
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar clinvar_20180603 humandb/
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar exac03 humandb/
+ 
+$ ./annotate_variation.pl -buildver hg19 -downdb -webfrom annovar dbnsfp31a_interpro humandb
+ 
+# 11. 2. Converting VCF to Annovar input format
+ 
+$ ./convert2annovar.pl -format vcf4 ~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.vcf.gz >~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.avinput
+ 
+# 11.3 Running Annovar table function
+ 
+$./table_annovar.pl~/ngs_course/dnaseqassignment/results/ NGS0001_filtered.avinput humandb/ -buildver annotation.bed  \ 
+   -out ~/ngs_course/dnaseqassignment/results/ NGS0001_filtered -remove   \ 
+      -protocol refGene,ensGene,clinvar_20180603,exac03,dbnsfp31a_interpro -operation g,g,f,f,f -otherinfo -nastring . -csvout
+
+
