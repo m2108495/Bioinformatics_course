@@ -111,10 +111,13 @@ $ mkdir ~/ngs_course/dnaseqassignment/data/aligned_data
 $ bwa index ~/ngs_course/dnaseqassignment/data/reference/annotation.bed
 $ ls ~/ngs_course/dnaseqassignment/data/reference
 # Aligning paired trimmed fastq files using read group information.
-$ ~/ngs_course/dnaseqassignment/data/trimmed_fastq
-$ head NGS0001_trimmed_R_2P
-@11V6WR1:111:D1375ACXX:1:1101
-# Use BWA-MEM to align paired-end sequences. Briefly, the algorithm works by seeding alignments with
-maximal exact matches (MEMs) and then extending seeds with the affine-gap Smith-Waterman algorithm (SW)
+Use BWA (alignment via Burrows-Wheeler): BWA-MEM algorithm that  works by seeding alignments with maximal exact matches (MEMs) and then extending seeds with the affine-gap Smith-Waterman algorithm (SW). It the is the best quality for long reads amongst  the three BWA algorithm. 
+
+Read group information was obtained from the workflow for the basic bioinformatic module. Read group identifier (ID) :HWI-D00119.50.H7AP8ADXX.1.WES01. Read group sample name (SM) WES01. Platform/technology used to produce the reads (PL) ILLUMINA. Library name (LB). nextera-wes01-blood. Date that run was produced (DT) 2017-02-23. Platform unit (PU) HWI-D00119
+
+$bwa mem [ options : -thread 4 ‘to speed up the process’ -verbosity level 1 -R’@RG read group info’ – I 250,50 the mean insert size is 250, standard deviation 50, maximum and minimum insert size distribution :450 and 50 respectively]  <index reference> <fastq1 file> <fatsq2 file > \ > <sam file>
+
+$ bwa mem -t4 -V1 -R'@RG\tID:HWI-D0011.50.H7AP8ADXX.1.WES01\tSM:WES01\tPL:ILLUMINA\tLB:nextera-wes01-blood\tDT:2017-02-23\tPU:HWI-D00119' -I250,50 /home/ubuntu/ngs_course/dnaseqassignment/data/reference/annotation.bed  /home/ubuntu/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R_1P  /home/ubuntu/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R_2P > /home/ubuntu/ngs_course/dnaseqassignment/data/aligned_data/NGS0001.sam
+
 
   
