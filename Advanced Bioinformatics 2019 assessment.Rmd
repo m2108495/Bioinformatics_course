@@ -35,15 +35,18 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ##library(ggplot2)
 ##ggplot(cars,aes (speed,dist))+geom_point()+geom_smooth (method="lm", formula="y~x")
 "Task 3.7 partA"
+##library (hel=datasets)
 ##data(cars)
 ##View(cars)
+##force(cars)
 ##speedft<- cars$speed *1.46667
 "convert speed from miles per hour to feet per second"
-##speedft.sec<- sqrt(speedft)
+##speedft.sec<- speedft^2
 ##y<-cars$dist;x<-speedft.sec
 ##model<-lm(formula=y~x)
 ##summary(model)
 "Task 3.7 partB"
+##library (ggplot2)
 ##ggplot(cars,aes (speedft.sec,dist))+geom_point()+geom_smooth (method="lm", formula="y~x")
 
 
