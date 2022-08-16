@@ -30,14 +30,19 @@ $ mkdir trimmed_fastq
 
 $ ls -lF
 
-# 2.Upload the untrimmed Fastq files and reference genome as weblinks
+# 2.1Upload the untrimmed Fastq files and reference genome as weblinks
+
 
 $ wget https://s3-eu-west-1.amazonaws.com/workshopdata2017/NGS0001.R1.fastq.qz
+
 $ wget https://s3-eu-west-1.amazonaws.com/workshopdata2017/NGS0001.R2.fastq.qz
+
 $ wget https://s3-eu-west-1.amazonaws.com/workshopdata2017/annotation.bed
-# check the files were downloaded to data
+
+# 2.2.check the files were downloaded to data
 $ pwd
 $ ls -l
+
 # 3.Move the three downloaded files to untrimmed_fastq subdirectory
 
 $ mv NGS0001.R1.fastq.qz ~/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.qz
@@ -160,7 +165,7 @@ $ cd ~/ngs_course/dnaseqassignment/data/trimmed_fastq
 $ trimmomatic PE -threads 4 -phred33 
 /home/ubuntu/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R1.fastq.gz 
 /home/ubuntu/ngs_course/dnaseqassignment/data/untrimmed_fastq/NGS0001.R2.fastq.gz\
->   -baseout ~/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R 
+> -baseout ~/ngs_course/dnaseqassignment/data/trimmed_fastq/NGS0001_trimmed_R 
 ILLUMINACLIP:/home/ubuntu/anaconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/NexteraPE-PE.fa:2:30:10 TRAILING:25 MINLEN:50
 
 # 6.4 Asses the quality of the paired trimmed files : repeat the steps for untrimmed reads as above
@@ -188,7 +193,9 @@ $ mkdir trimmmed
 $ ~/ngs_course/dnaseqassignment/results/fastqc_trimmed_reads
 
 $ cat */summary.txt > ~/ngs_course/dnaseqassignment/logs/trimmmed/fastqc_summaries.txt
-# 7. Aligbment 
+
+# 7. Alignment 
+
 # 7.1.Create files for the reference and the BWA-generated index files
 
 $ mkdir -p ~/ngs_course/dnaseqassignment/data/reference
@@ -280,10 +287,10 @@ $ tabix -p vcf ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz
  
 # The command is used as $ vcffilter -f "QUAL > 1 & QUAL / AO > 10 & SAF > 0 & SAR > 0 & RPR > 1 & RPL > 1" \ ~/ngs_course/ dnaseqassignment /results/ NGS0001.vcf.gz > ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
 # filtering criteria 
- # 1-  QUAL=probability that there is a polymorphism at the loci described by the record: 1 - P(locus is homozygous given the data)
-# 2- AO=Alternate allele observations, with partial observations recorded fractionally
-# 3- SAF=Number of alternate observations on the forward strand SAR=Number of alternate observations on the reverse strand 
- # 4- RPL=Reads Placed Left: number of reads supporting the alternate balanced to the left (5’) of -the alternate allele RPR=Reads Placed Right: number of reads supporting the alternate balanced to the right (3’) of the alternate allele
+ 1-  QUAL=probability that there is a polymorphism at the loci described by the record: 1 - P(locus is homozygous given the data)
+ 2- AO=Alternate allele observations, with partial observations recorded fractionally
+ 3- SAF=Number of alternate observations on the forward strand SAR=Number of alternate observations on the reverse strand 
+ 4- RPL=Reads Placed Left: number of reads supporting the alternate balanced to the left (5’) of -the alternate allele RPR=Reads Placed Right: number of reads supporting the alternate balanced to the right (3’) of the alternate allele
  
 $ bedtools intersect -header -wa -a ~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf -b ../chr22.genes.annotation.bed \~/ngs_course/ dnaseqassignment /results/ NGS0001_filtered.vcf
 
